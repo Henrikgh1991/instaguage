@@ -1,0 +1,15 @@
+@mixin font-face($family, $weight, $name, $italic-name: '#{$name}Italic') {
+  @font-face {
+	  font-family: $family;
+	  font-weight: $weight;
+	  font-style: normal;
+	  src: url("#{$siemens-font-path}#{$family}-#{$name}.otf");
+  }
+
+  @font-face {
+	  font-family: $family;
+	  font-weight: $weight;
+	  font-style: italic;
+	  src: url("#{$siemens-font-path}#{$family}-#{$italic-name}.otf");
+  }
+}

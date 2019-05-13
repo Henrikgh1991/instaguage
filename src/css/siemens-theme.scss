@@ -1,0 +1,313 @@
+$font-family-sans-serif: 'SiemensSans';
+$font-family-serif: 'SiemensSerif';
+$page-margin: 36pt;
+$siemens-font-path: './../assets/fonts/';
+
+@import 'mixins/_fonts.scss';
+
+// SiemensSerif
+@include font-face('SiemensSerif', normal, 'Roman', 'Italic');
+@include font-face('SiemensSerif', 500, 'Semibold');
+@include font-face('SiemensSerif', bold, 'Bold');
+
+// SiemensSans
+@include font-face('SiemensSans', normal, 'Roman', 'Italic');
+@include font-face('SiemensSans', 500, 'Bold');
+@include font-face('SiemensSans', bold, 'Black');
+
+// SiemensSlab
+@include font-face('SiemensSlab', normal, 'Roman', 'Italic');
+@include font-face('SiemensSlab', 500, 'Bold');
+@include font-face('SiemensSlab', bold, 'Black');
+
+html,
+body {
+	font-family:$font-family-sans-serif, sans-serif;
+	font-size:11pt;
+}
+
+a {
+	color:inherit;
+	background-position:left center;
+	background-repeat:no-repeat;
+	cursor:pointer;
+	
+	&:focus {
+		outline:none;
+		text-decoration:inherit;
+		color:inherit;
+	}
+	
+	&:hover {
+		color:#990000;
+		text-decoration:none;
+	}
+
+	&.internal {	
+		padding-left:8px;
+		background-image:url('./../assets/img/siemens/icon-link.png');
+	}
+	
+	&.person {
+		padding-left:13px;
+		background-image:url('./../assets/img/siemens/icon-person.png');	
+		background-position:left 3px;
+	}
+}
+
+section#content {
+	//font-family:Arial,sans-serif;
+	font-size:inherit;
+	text-align:justify;
+	
+	h1 {
+		font-family: "SiemensSlab",sans-serif;
+		font-size:2rem;
+	    font-weight: normal;
+	    color: #333333;
+	    margin-top:0.25em;
+	    margin-bottom:0.5em;
+	}
+	
+	h2 {
+	    font-family: "SiemensSlab",sans-serif;
+	    font-size: 1.5rem;
+	    font-weight: normal;
+	    color: #999999;	
+	    margin-top:0.25em;
+	    margin-bottom:0.5em;
+	}
+	
+	h3 {
+	    font-family: "SiemensSlab",sans-serif;
+	    font-size: 1rem;
+	    font-weight: bold;
+	    color: #333333;	
+	    margin-top:0.25em;
+	    margin-bottom:0.25em;
+	}
+
+	h4 {
+		font-family:"SiemensSans",sans-serif;
+		font-size:1rem;
+		font-weight:bold;
+		color:#666666;
+		margin-top:0.5em;
+		margin-bottom:0.5em;
+	}
+
+	blockquote {
+		font:inherit;
+	}
+
+	> article {
+		max-width:60em;
+	}
+}
+
+header {
+	display:block;
+	height:70pt;
+	position:relative;
+	margin-bottom:2.5rem;
+
+	.container-fluid {
+		padding-left:$page-margin;
+		padding-right:$page-margin;
+	}
+
+	.toolbar {
+		position:absolute;
+		color: white;
+		background-color: #666;
+		height: 18pt;
+		line-height: 18pt;		
+		bottom:0;
+		left:0;
+		right:0;
+		border-top:solid 1px white;
+		border-bottom:solid 1px white;
+		
+		a, span.link {
+			cursor:pointer;
+			margin:0;
+			padding:0;
+			font-family: "SiemensSlab", sans-serif;
+			font-weight: normal;
+			font-size: 10pt;
+			line-height:18pt;
+			color: white;
+			background:none;
+			position:relative;
+			top:-0.5pt;
+			margin-right:2em;
+    		}
+
+		div.layer {
+			position:absolute;
+			top:13pt;
+			left:0;
+			display:inline-block;
+			min-width:8em;
+			min-height:5em;
+			z-index:1;
+			background-color:#eee;
+			cursor:default;
+			border-left:solid 1px white;
+			border-right:solid 1px white;
+			border-bottom:solid 1px white;
+
+			.close_layer_button {
+				background-image:url("./../assets/img/siemens/icon-cross.png");
+				background-position:center center;
+				background-repeat:no-repeat;
+				cursor:pointer;
+				position:relative;
+				top:0;
+				right:0;
+				border-left:solid 1px white;
+				border-bottom:solid 1px white;
+				width:2em;
+				height:2em;
+				display:block;
+				background-color:#ddd;
+				margin-left:auto;
+				margin-right:0;
+			}
+
+			p {
+				font-family:$font-family-sans-serif, sans-serif;
+				font-size:11pt;
+				color:#333;
+				margin:1em;
+
+				a {
+					font:inherit;
+					color:inherit;
+				}
+			}
+		}
+	}
+
+	.osiep-nav {
+			font-family: "SiemensSlab", sans-serif;
+			font-weight: normal;
+			font-size:10pt;
+			position:absolute;
+			background-color:#eee;
+			color:#777;
+			height:18pt;
+			line-height:18pt;
+			display:block;
+			bottom:-18pt;
+			left:0;
+			right:0;
+			border-top:solid 1px white;
+			border-bottom:solid 1px white;
+			margin-bottom:1px;
+
+			> ul {
+				list-style:none;
+				margin:0;
+				padding:0;
+
+				li {
+					display:inline-block;
+					margin-right:2em;
+
+					a.v-link-active {
+						color:#900;
+					}
+				}
+			}
+	}
+	
+	.login {
+		font-size:80%;
+		position:absolute;
+		right:$page-margin;
+		top:12pt;
+		
+		a.person {
+			background-position:left 2px;
+		}
+		
+		a + a {
+			margin-left:0.5em;
+		}
+	}
+}
+
+footer {
+	font-family:Arial,sans-serif;
+	color:#999;
+	
+	ul {
+		list-style:none;
+		margin:0;
+		
+		li {
+			display:inline-block;
+			
+			&:first-child {
+				color:#333;
+			}
+		}
+		
+		a {
+			color:inherit;
+			padding:0;
+			background-image:none;
+			
+			&:after {
+				content:" | ";
+			}
+		}
+	}
+}
+/*
+.btn {
+    border: none;
+    background-color: #999;
+    padding: 0.25em;
+    line-height: 1.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    display: inline-block;
+    outline: none;
+    border-radius: 0.5em;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+    
+    &:hover {
+    	color:white;
+		background-color: #666;
+    }
+    
+    &[disabled] {
+		background-color: #ddd;
+	    color: #999;
+	    cursor: default;
+    }
+}
+table.nwa {
+	width:100%;
+	border-collapse:collapse;
+	table-layout:fixed;
+	line-height:2em;
+	
+	thead {
+		border-bottom:solid 1px #ccc;
+		background-color:#e8e8e8;
+	}
+	
+	tbody:hover {
+		background-color:#e8ffe8;
+	}
+	
+	tbody + tbody {
+		border-top:dotted 1px #ccc;
+	}
+}
+*/
