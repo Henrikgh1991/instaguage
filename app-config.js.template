@@ -1,0 +1,10 @@
+export default {
+    mqtt : {
+        accessKeyId: '',
+        secretAccessKey: '',
+        sessionToken: '',
+        endpointAddress: ',
+        region: '',
+        reconnectPeriod : 60000
+    }
+}
