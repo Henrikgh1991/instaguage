@@ -1,0 +1,21 @@
+<?php
+
+class AppConfig {
+    const config = [
+        "appTitle" => "InstaGauge",
+        "sorceFrom" => "instagauge@idea-company.siemens.cloud",
+        "applicationUrlForMails" => "https://www.idea-company.siemens.cloud/instagauge",
+        "db" => [
+            "username" => "",
+            "password" => "",
+            "database" => "",
+            "endpoint" => ""
+        ],
+        "mqtt" => [
+            "local_cert" => "",
+            "local_pk" => "",
+            "server" => "",
+            "port" => 8883
+        ]
+    ];
+}
