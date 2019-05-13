@@ -1,0 +1,289 @@
+{% macro qHeading(data) %}
+      <Row>
+        <Cell>
+          <Data ss:Type="String">{{ data.title | e }}</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">[heading]</Data>
+        </Cell>
+      </Row>
+{% endmacro %}
+
+{% macro qScale(data) %}
+      <Row>
+        <Cell>
+          <Data ss:Type="String">{{ data.title | e }}</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">[single choice]</Data>
+        </Cell>
+      </Row>
+      {% for o in data.options %}
+      {% set v = (data.votes|cast_to_array)[o.id] %}
+      <Row>
+        <Cell/>
+        <Cell>
+          <Data ss:Type="String">{{ o.title | e}}</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="Number">{{ v ? v : 0 }}</Data>
+        </Cell>
+      </Row>
+      {% endfor %}
+      <Row>
+        <Cell/>
+        <Cell>
+          <Data ss:Type="String">total:</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="Number">{{ data.votes.total }}</Data>
+        </Cell>
+      </Row>
+{% endmacro %}
+
+{% macro qMultipleChoice(data) %}
+      <Row>
+        <Cell>
+          <Data ss:Type="String">{{ data.title | e }}</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">[multiple choice]</Data>
+        </Cell>
+      </Row>
+      {% for o in data.options %}
+      {% set v = (data.votes|cast_to_array)[o.id] %}
+      <Row>
+        <Cell/>
+        <Cell>
+          <Data ss:Type="String">{{ o.title | e}}</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="Number">{{ v ? v : 0 }}</Data>
+        </Cell>
+      </Row>
+      {% endfor %}
+      <Row>
+        <Cell/>
+        <Cell>
+          <Data ss:Type="String">total:</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="Number">{{ data.votes.total }}</Data>
+        </Cell>
+      </Row>
+{% endmacro %}
+
+{% macro qFreeText(data) %}
+      <Row>
+        <Cell>
+          <Data ss:Type="String">{{ data.title | e }}</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">[free text]</Data>
+        </Cell>
+      </Row>
+      {% set v = (data.votes|cast_to_array)[data.id] %}
+        {% for c in v %}
+        <Row>
+            <Cell/>
+            <Cell/>
+            <Cell>
+            <Data ss:Type="String">{{ c | e }}</Data>
+            </Cell>
+        </Row>
+        {% endfor %}
+      <Row>
+        <Cell/>
+        <Cell>
+          <Data ss:Type="String">total:</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="Number">{{ data.votes.total }}</Data>
+        </Cell>
+      </Row>
+{% endmacro %}
+
+{% macro qMatrix(data) %}
+  {% if data.params.mode == "items" %}
+      <Row>
+        <Cell>
+          <Data ss:Type="String">{{ data.title | e }}</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">[matrix]</Data>
+        </Cell>
+      </Row>
+      <Row>
+          <Cell/>
+          <Cell>
+            <Data ss:Type="String">Title</Data>
+          </Cell>
+          <Cell>
+            <Data ss:Type="String">{{ data.options[0].title | e }}</Data>
+          </Cell>
+          <Cell>
+            <Data ss:Type="String">{{ data.options[1].title | e }}</Data>
+          </Cell>
+          <Cell>
+            <Data ss:Type="String">Count</Data>
+          </Cell>
+      </Row>
+    {% for i in data.items %}
+    {% set p = data.votes.points[i.id] %}
+        <Row>
+            <Cell/>
+            <Cell>
+              <Data ss:Type="String">{{ i.title | e }}</Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number">{{ p.point.x | e }}</Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number">{{ p.point.y | e }}</Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number">{{ p.count | e }}</Data>
+            </Cell>
+        </Row>
+    {% endfor %}
+  {% else %}
+      <Row>
+        <Cell>
+          <Data ss:Type="String">{{ data.title | e }}</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">[matrix]</Data>
+        </Cell>
+      </Row>
+      <Row>
+          <Cell/>
+          <Cell/>
+          <Cell>
+            <Data ss:Type="String">{{ data.options[0].title | e }}</Data>
+          </Cell>
+          <Cell>
+            <Data ss:Type="String">{{ data.options[1].title | e }}</Data>
+          </Cell>
+          <Cell>
+            <Data ss:Type="String">Count</Data>
+          </Cell>
+      </Row>
+      {% set v = (data.votes.points|cast_to_array) %}
+        {% for c in v %}
+        <Row>
+            <Cell/>
+            <Cell/>
+            <Cell>
+              <Data ss:Type="Number">{{ c.x | e }}</Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number">{{ c.y | e }}</Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number">{{ c.count | e }}</Data>
+            </Cell>
+        </Row>
+        {% endfor %}
+      <Row>
+        <Cell/>
+        <Cell>
+          <Data ss:Type="String">total:</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="Number">{{ data.votes.total }}</Data>
+        </Cell>
+      </Row>
+  {% endif %}
+{% endmacro %}
+
+{% macro qWordCloud(data) %}
+      <Row>
+        <Cell>
+          <Data ss:Type="String">{{ data.title | e }}</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">[word cloud]</Data>
+        </Cell>
+      </Row>
+      <Row>
+          <Cell/>
+          <Cell/>
+          <Cell>
+            <Data ss:Type="String">Term</Data>
+          </Cell>
+          <Cell>
+            <Data ss:Type="String">Count</Data>
+          </Cell>
+      </Row>
+      {% set v = (data.votes.words|cast_to_array) %}
+        {% for k,c in v %}
+        <Row>
+            <Cell/>
+            <Cell/>
+            <Cell>
+              <Data ss:Type="String">{{ k | e }}</Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String">{{ c | e }}</Data>
+            </Cell>
+        </Row>
+        {% endfor %}
+      <Row>
+        <Cell/>
+        <Cell>
+          <Data ss:Type="String">total:</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="Number">{{ data.votes.total }}</Data>
+        </Cell>
+      </Row>
+{% endmacro %}
+
+{% macro qOrder(data) %}
+      <Row>
+        <Cell>
+          <Data ss:Type="String">{{ data.title | e }}</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="String">[item order]</Data>
+        </Cell>
+      </Row>
+      <Row>
+          <Cell/>
+          <Cell/>
+          <Cell>
+            <Data ss:Type="String">Rank</Data>
+          </Cell>
+          <Cell>
+            <Data ss:Type="String">Item</Data>
+          </Cell>
+          <Cell>
+            <Data ss:Type="String">Value</Data>
+          </Cell>
+      </Row>
+      {% set v = (data.votes|cast_to_array)[data.id] %}
+        {% for k,c in v %}
+        <Row>
+            <Cell/>
+            <Cell/>
+            <Cell>
+              <Data ss:Type="String">{{ k+1 | e }}</Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String">{% for o in data.options %}{% if o.id == c %}{{ o.title | e }}{% endif %}{% endfor %}</Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number">{{ (data.votes.rawData|cast_to_array)[k].value }}</Data>
+            </Cell>
+        </Row>
+        {% endfor %}
+      <Row>
+        <Cell/>
+        <Cell>
+          <Data ss:Type="String">total:</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="Number">{{ data.votes.total }}</Data>
+        </Cell>
+      </Row>
+{% endmacro %}
